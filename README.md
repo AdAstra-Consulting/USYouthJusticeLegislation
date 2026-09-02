@@ -1,2 +1,11 @@
 # USYouthJusticeLegislation
 A Compilation of Passed Legislation in the US related to juvenile justice policy - 2021 - 2026
+
+The National Conference of State Legislatures maintains a database covering enacted juvenile justice legislation, supported by the Annie E. Casey Foundation. The author of this brief has turned those pieces of legislation tagged as Juvenile Justice and Enacted/Passed into a searchable database of legislation from 2021 - 2026, available for free here.
+
+Please note that while the author of this report has done extensive manual review of every bill listed, the system used by NCSL to ‘tag’ bills and the subsequent information scraping may contain omissions. It’s likely that not every relevant juvenile justice bill from every year made it into the database; legislation that was missed and legislation that passes through the end of 2026 will be added. The author is planning to update with 2027 data by June of 2027, when many state legislative cycles will have ended.
+
+*Most Importantly*: The categorization of bills into types – Administrative, Reform, Punitive, and Mixed – is a judgement call based solely on the author’s expertise, the text of said bills, and the way news media or experts have publicly referred to the legislation. Categorization is wholly the Author’s, and no expert, advocate, or reviewer of this report has influenced how they are tagged. Therefore, the findings should be taken cautiously, and not as authoritative. Bills coded Mixed and Administrative are excluded from ratios of reform to punitive throughout the related report available here, rather than split across it; the ratios describe the 518 bills with an unambiguous direction.
+
+This tagging architecture is sometimes clear and simple, and sometimes flattens the impact of huge pieces of legislation. It is likely, if not certain, that some bills categorized “Administrative” are in fact more Reform or Punitive than that categorization reflects. Indeed, budgetary decisions about what types of programs to fund, or conditions in facilities, have an enormous impact on the children in those programs and facilities. Wherever the impact might cut in both directions, bills have been labeled ‘Mixed’. Each bill labeled Mixed, Reform, or Punitive has received at least one complete review of its text.
+
