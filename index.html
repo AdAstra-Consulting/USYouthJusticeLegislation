@@ -35,7 +35,8 @@
   .header-meta span{margin-right:1.75rem;}
 
   .about-btn{position:absolute;top:1rem;right:1.5rem;background:var(--purple);color:white;border:none;border-radius:20px;padding:0.4rem 1rem;font-family:var(--sans);font-weight:700;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;z-index:10;box-shadow:0 2px 6px rgba(124,0,255,0.3);transition:all 0.15s;}
-  .header-btns{position:absolute;top:1rem;left:50%;transform:translateX(-50%);display:flex;gap:0.5rem;align-items:center;z-index:10;}
+  .header-btns{position:absolute;top:50%;right:2rem;left:auto;transform:translateY(-50%);display:flex;flex-direction:column;gap:0.45rem;align-items:stretch;z-index:10;}
+  .header-btns > *{text-align:center;min-width:15rem;}
 .feedback-btn{background:#B04E0D;color:white;border:none;border-radius:20px;padding:0.4rem 1rem;font-family:var(--sans);font-weight:700;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;line-height:1.5;box-shadow:0 2px 6px rgba(176,78,13,0.3);transition:all 0.15s;}
 .feedback-btn:hover{background:#8c3d0a;transform:translateY(-1px);box-shadow:0 3px 8px rgba(176,78,13,0.4);}
 .header-btns .about-btn{position:static;top:auto;right:auto;}
@@ -437,7 +438,7 @@ tbody tr{border-bottom:1px solid var(--border);transition:background 0.1s;}
   @media (max-width: 760px){
     header{display:flex;flex-direction:column;}
     .banner-img{display:none;}
-    .header-btns{position:static;transform:none;order:1;display:flex;flex-wrap:wrap;gap:0.35rem;padding:0.75rem 1rem 0;}
+    .header-btns{position:static;transform:none;order:1;display:flex;flex-direction:row;flex-wrap:wrap;gap:0.35rem;padding:0.75rem 1rem 0;}
     .header-btns .howto-btn,.header-btns .about-btn,.header-btns .feedback-btn{font-size:0.62rem;padding:0.35rem 0.7rem;letter-spacing:0.03em;}
     .header-overlay{position:static;order:2;padding:0.6rem 1rem 0.9rem;background:none;}
     .header-overlay h1{font-size:1.35rem;line-height:1.15;}
@@ -547,6 +548,47 @@ tbody tr{border-bottom:1px solid var(--border);transition:background 0.1s;}
     .sp-head.has-shape{padding-right:1rem;min-height:0;}
     .sp-shape{position:static;transform:none;width:120px;margin:0 auto 0.6rem;}
   }
+
+  #howToModal .modal{border-top-color:var(--green);}
+  details.notice-inner > summary{cursor:pointer;list-style:none;}
+  details.notice-inner > summary::-webkit-details-marker{display:none;}
+  details.notice-inner > summary::before{content:"\25B8";display:inline-block;width:1em;color:var(--orange);transition:transform .15s;}
+  details.notice-inner[open] > summary::before{transform:rotate(90deg);}
+  .notice-more::after{content:"Show details";margin-left:0.5rem;font-size:0.72rem;text-decoration:underline;color:#7a5500;}
+  details.notice-inner[open] .notice-more::after{content:"Hide details";}
+  .notice-body{margin-top:0.5rem;padding-top:0.5rem;border-top:1px dashed rgba(176,78,13,0.35);}
+  .legend-help{font-family:var(--sans);font-size:0.74rem;color:var(--text-light);line-height:1.45;}
+  .header-btns > .howto-btn, .header-btns > .about-btn, .header-btns > .feedback-btn{margin:0;box-sizing:border-box;line-height:1.2;padding:0.45rem 1rem;}
+  @media (max-width:1100px) and (min-width:761px){ .header-btns > *{min-width:12rem;} header h1{font-size:1.55rem;} .header-meta span{margin-right:1.1rem;} }
+  @media (max-width:760px){ .header-btns > *{min-width:0;} }
+
+  .tgrid-3{grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:1rem;}
+  @media (max-width:979px){ .tgrid-3{grid-template-columns:1fr;} }
+  .ipick{background:var(--green-bg-light);border:1px solid var(--green);border-left:4px solid var(--green);border-radius:6px;padding:0.75rem 1rem;margin:0 0 1rem;}
+  .ipick-hd{display:flex;flex-wrap:wrap;align-items:baseline;gap:0.3rem 0.75rem;margin-bottom:0.55rem;}
+  .ipick-hd b{font-family:var(--sans);font-weight:800;font-size:0.9rem;color:var(--green-dark);}
+  .ipick-hd span{font-size:0.74rem;color:var(--text-light);}
+  .ipick-row{display:flex;flex-wrap:wrap;gap:0.4rem;}
+  .ipick-chip{font-family:var(--sans);font-weight:700;font-size:0.76rem;border:1.5px solid var(--green);background:white;color:var(--green-dark);border-radius:20px;padding:0.35rem 0.85rem;cursor:pointer;transition:all .12s;}
+  .ipick-chip i{font-style:normal;font-weight:500;opacity:0.7;margin-left:0.2rem;font-family:var(--mono);font-size:0.7rem;}
+  .ipick-chip:hover{background:var(--green-bg);}
+  .ipick-chip.on{background:var(--green);color:white;}
+  .ipick-chip.on i{opacity:0.85;}
+  .ipick-more{margin-top:0.5rem;font-size:0.72rem;color:var(--text-light);}
+  @media (max-width:760px){ .ipick{padding:0.65rem 0.7rem;} .ipick-chip{font-size:0.8rem;padding:0.45rem 0.8rem;} }
+
+  .tseg-sm{float:right;margin:-1.55rem 0 0.4rem;}
+  .tseg-sm button{font-size:0.62rem;padding:0.25rem 0.55rem;}
+  .hi-tabs{display:flex;flex-wrap:wrap;gap:0.3rem;margin:0.5rem 0 0.4rem;clear:both;}
+  .hi-tabs button{font-family:var(--sans);font-weight:700;font-size:0.68rem;border:1px solid var(--green-light);background:white;color:var(--green-dark);border-radius:12px;padding:0.2rem 0.6rem;cursor:pointer;}
+  .hi-tabs button.on{background:var(--green-dark);color:white;border-color:var(--green-dark);}
+  .hi-list{list-style:none;margin:0.6rem 0 0;padding:0;clear:both;}
+  .hi-list li{font-size:0.82rem;line-height:1.5;color:var(--text);padding:0.55rem 0;border-top:1px solid var(--border);}
+  .hi-list li:first-child{border-top:none;}
+  .hi-bill{font-family:var(--mono);font-weight:700;color:var(--green-dark);text-decoration:none;border-bottom:1px dotted var(--green);}
+  .hi-bill:hover{background:var(--green-bg);}
+  .hi-yr{font-size:0.72rem;color:var(--text-light);}
+  @media (max-width:760px){ .tseg-sm{float:none;margin:0.3rem 0;} }
 </style>
 </head>
 <body>
@@ -558,7 +600,7 @@ tbody tr{border-bottom:1px solid var(--border);transition:background 0.1s;}
       <div class="header-meta">
         <span>50 States</span>
         <span>968 Bills</span>
-        <span>Build 48</span>
+        <span>Build 51</span>
         <span>Enacted laws only</span>
         <span>Years: 2021&#8211;26</span>
       </div>
@@ -633,13 +675,13 @@ tbody tr{border-bottom:1px solid var(--border);transition:background 0.1s;}
 
 <p><strong>Contact.</strong> <a href="mailto:silasatadastra@gmail.com">silasatadastra@gmail.com</a></p>
 
-      <p><strong>Last updated.</strong> 2 November 2026 (Build 48)</p>
+      <p><strong>Last updated.</strong> 4 November 2026 (Build 51)</p>
     </div>
   </div>
 </div>
 
 <div id="versionBanner"></div>
-<div class="notice"><div class="notice-inner"><strong>Review progress:</strong> All six years (2021&#8211;2026) have been hand-reviewed &#8212; Direction labels and Issue tags reflect editorial judgment, not auto-classification. Remaining flagged rows mark specific open questions rather than unreviewed bills. <strong>Click any Direction, Issues, Notes, or Review cell to edit</strong>; changes save to your browser. Click a bill number for full text. Use <strong>States</strong> for state overviews, <strong>Edits</strong> to export.<br><strong>2026 is partial.</strong> Treat 2026 counts, shares, and any year-over-year comparison involving 2026 as provisional.</div></div>
+<div class="notice"><details class="notice-inner" id="noticeBox"><summary><strong>Review progress and editing</strong> &#183; <strong>2026 is partial:</strong> treat 2026 figures as provisional <span class="notice-more"></span></summary><div class="notice-body"><strong>Review progress:</strong> All six years (2021&#8211;2026) have been hand-reviewed &#8212; Direction labels and Issue tags reflect editorial judgment, not auto-classification. Remaining flagged rows mark specific open questions rather than unreviewed bills. <strong>Click any Direction, Issues, Notes, or Review cell to edit</strong>; changes save to your browser. Click a bill number for full text. Use <strong>States</strong> for state overviews, <strong>Edits</strong> to export.<br><strong>2026 is partial.</strong> Treat 2026 counts, shares, and any year-over-year comparison involving 2026 as provisional.</div></details></div>
 
 <div class="controls">
   <div class="controls-inner">
@@ -713,19 +755,19 @@ tbody tr{border-bottom:1px solid var(--border);transition:background 0.1s;}
     <span class="legend-label">Review:</span>
     <span class="badge badge-unreviewed legend-filter" data-filter="filterStatus" data-value="Unreviewed" onclick="legendFilter(this)" title="Show only Unreviewed bills">Unreviewed</span><span class="badge badge-reviewed legend-filter" data-filter="filterStatus" data-value="Reviewed" onclick="legendFilter(this)" title="Show only Reviewed bills">Reviewed</span><span class="badge badge-flagged-status legend-filter" data-filter="filterStatus" data-value="Flagged" onclick="legendFilter(this)" title="Show only Flagged bills">Flagged</span>
     <div class="legend-divider"></div>
-    <span class="legend-label">&#9873; = Flag (click to toggle) &#183; Review badge clicks to cycle &#183; click a label above to filter</span>
+    <span class="legend-help">Click a label above to show only those bills. In the table, click &#9873; to flag a bill, and click a bill&#8217;s Review badge to change its stage (Unreviewed &#8594; Reviewed &#8594; Flagged).</span>
   </div>
   <table id="billTable">
     <thead><tr>
       <th data-col="flag"></th>
       <th data-col="year" onclick="sortTable('year')" id="th-year">Year <span class="sort-arrow">&#8597;</span></th>
+      <th data-col="date" onclick="sortTable('date')" id="th-date">Enacted <span class="sort-arrow">&#8597;</span></th>
       <th data-col="bill" onclick="sortTable('bill')" id="th-bill">Bill <span class="sort-arrow">&#8597;</span></th>
       <th data-col="state" onclick="sortTable('state')" id="th-state">State <span class="sort-arrow">&#8597;</span></th>
       <th data-col="title" onclick="sortTable('title')" id="th-title">Title <span class="sort-arrow">&#8597;</span></th>
       <th data-col="summary">Summary</th>
       <th data-col="sponsor" onclick="sortTable('sponsor')" id="th-sponsor">Sponsor <span class="sort-arrow">&#8597;</span></th>
       <th data-col="sponsorship" onclick="sortTable('sponsorship')" id="th-sponsorship">Sponsorship <span class="sort-arrow">&#8597;</span></th>
-      <th data-col="date" onclick="sortTable('date')" id="th-date">Enacted <span class="sort-arrow">&#8597;</span></th>
       <th data-col="direction" onclick="sortTable('direction')" id="th-direction">Direction <span class="sort-arrow">&#8597;</span></th>
       <th data-col="issues">Issues</th>
       <th data-col="status" onclick="sortTable('status')" id="th-status">Review <span class="sort-arrow">&#8597;</span></th>
@@ -2411,13 +2453,13 @@ function isAddedBill(b){
 const columns = [
   {key:"flag", label:"Flag", default:true},
   {key:"year", label:"Year", default:true},
+  {key:"date", label:"Enacted", default:true},
   {key:"bill", label:"Bill", default:true},
   {key:"state", label:"State", default:true},
   {key:"title", label:"Title", default:true},
   {key:"summary", label:"Summary", default:true},
   {key:"sponsor", label:"Sponsor", default:true},
   {key:"sponsorship", label:"Sponsorship", default:true},
-  {key:"date", label:"Enacted", default:true},
   {key:"direction", label:"Direction", default:true},
   {key:"issues", label:"Issues", default:true},
   {key:"status", label:"Review", default:true},
@@ -2430,7 +2472,7 @@ columns.forEach(c => colVis[c.key] = c.default);
 const PRESETS = {
   all: columns.map(c=>c.key),
   compact: ["flag","year","bill","state","title","direction","issues","status"],
-  minimal: ["year","state","bill","title","direction"],
+  minimal: ["flag","year","state","bill","title","direction"],
   sponsorship: ["flag","year","bill","state","title","sponsor","sponsorship","direction","issues"]
 };
 const colsList = document.getElementById('colsList');
@@ -2626,13 +2668,13 @@ function render(){
     tr.innerHTML=`
       <td data-col="flag" style="text-align:center;vertical-align:middle"><span class="flag-icon ${b.flagged?'flagged':''}" onclick="toggleFlag(${b._idx})" title="Toggle flag">&#9873;</span>${added?`<button class="btn-del-added" onclick="deleteAddedBill(${b._idx})" title="Delete this added bill">&times;</button>`:''}</td>
       <td data-col="year" class="col-year">${b.year}</td>
+      <td data-col="date" class="col-date">${formatDate(b.date)}</td>
       <td data-col="bill" class="col-bill"><a href="${b.url}" target="_blank" rel="noopener" class="bill-link bill-link-${b.url_source}" title="${b.url_source==='google'?'Search on Google (no direct link on file)':(b.url_source==='legiscan'?'View on LegiScan':'View bill text')}">${b.bill}<span class="bill-link-icon">${b.url_source==='google'?'\u003F':'\u2197'}</span></a></td>
       <td data-col="state" class="col-state">${b.state}</td>
       <td data-col="title" class="col-title"><div class="clamp">${b.title}</div></td>
       <td data-col="summary" class="col-summary" onclick="this.classList.toggle('expanded')" title="Click to expand or collapse the full summary"><div class="clamp">${b.summary}</div></td>
       <td data-col="sponsor" class="col-sponsor">${renderCosCell(b)}</td>
       <td data-col="sponsorship"><span class="spon-badge ${sponBadgeClass(b.sponsorship)}">${(b.sponsorship||'Unknown').replace('Committee/Unknown','Committee')}</span></td>
-      <td data-col="date" class="col-date">${formatDate(b.date)}</td>
       <td data-col="direction" class="editable${dirEdited}" onclick="openDirectionEditor(${b._idx}, this)" title="Click to change Direction"><span class="badge ${getBadgeClass(b.direction)}">${b.direction}</span></td>
       <td data-col="issues" class="editable${issuesEdited}" onclick="openIssuesEditor(${b._idx}, this)" title="Click to edit Issues"><div class="tags">${b.issues.map(i=>`<span class="tag">${i}</span>`).join('')}</div></td>
       <td data-col="status" class="editable${statusEdited}" style="cursor:pointer" onclick="cycleStatus(${b._idx})" title="Click to cycle review stage"><span class="badge ${getStatusBadge(b.status)}">${b.status}</span></td>
@@ -2752,8 +2794,8 @@ function restoreAllPublishedNotes(){
 }
 
 // ---- new-version notice + backup reminder ----
-const CURRENT_BUILD = 48;
-const BUILD_DATE = '2 November 2026';
+const CURRENT_BUILD = 51;
+const BUILD_DATE = '4 November 2026';
 const SEEN_BUILD_KEY = 'adastra_jj_seen_build';
 const LAST_EXPORT_KEY = 'adastra_jj_last_export';
 function totalUserEdits(){ return Object.keys(edits).length + overrideCount(); }
@@ -3000,7 +3042,7 @@ function buildGlance(){
 // ============ TRENDS ============
 let trendsMode = false;
 let trendStateSort = 'volume';
-function trendFiltered(){
+function trendFiltered(skipIssue){
   const q=document.getElementById('search').value.toLowerCase();
   const fY=msel('filterYear'),fS=msel('filterState'),fD=document.getElementById('filterDirection').value;
   const fI=msel('filterIssue'),fP=document.getElementById('filterParty').value,fSt=document.getElementById('filterStatus').value,fSrc=document.getElementById('filterSource').value;
@@ -3010,7 +3052,7 @@ function trendFiltered(){
     if(q && ![b.bill,b.state,b.title,b.summary,b.sponsor,b.notes,b.ncsl,b.source,cosNames].join(' ').toLowerCase().includes(q)) return false;
     if(fY.length && !fY.includes(String(b.year))) return false;
     if(fS.length && !fS.includes(b.state)) return false; if(fD && b.direction!==fD) return false;
-    if(fI.length && !fI.some(i=>b.issues.includes(i))) return false; if(fP && b.party!==fP) return false;
+    if(!skipIssue && fI.length && !fI.some(i=>b.issues.includes(i))) return false; if(fP && b.party!==fP) return false;
     if(fSt && b.status!==fSt) return false; if(fSrc && sourceGroup(b.source)!==fSrc) return false;
     if(fSpon && b.sponsorship!==fSpon) return false;
     if(fCos==='none' && (b.cosponsor_count||0)!==0) return false;
@@ -3049,24 +3091,25 @@ function xYears(W,H,m){
   return {xs, lab};
 }
 function lineChart(series, opts){
-  opts=opts||{}; const W=640,H=280,m={l:42,r:16,t:16,b:30};
+  opts=opts||{}; const W=opts.W||640,H=opts.H||280,m={l:42,r:16,t:16,b:30};
   const all = series.flatMap(s=>s.values.filter(v=>v!==null&&isFinite(v)));
   const max = niceMax(Math.max(1,...all), !!opts.fmt);
   const {xs,lab} = xYears(W,H,m);
   const Y = v => H-m.b-(H-m.t-m.b)*v/max;
   let s = yGrid(W,H,m,max,opts.fmt) + lab;
+  const placed=[];
   series.forEach(se=>{
     let d='', pen=false;
     se.values.forEach((v,i)=>{ if(v===null||!isFinite(v)){ pen=false; return; } d+=(pen?'L':'M')+xs[i].toFixed(1)+','+Y(v).toFixed(1); pen=true; });
     s+=`<path d="${d}" fill="none" stroke="${se.color}" stroke-width="2.5" ${se.dash?'stroke-dasharray="6 4"':''}/>`;
     se.values.forEach((v,i)=>{ if(v===null||!isFinite(v)) return;
       s+=`<circle cx="${xs[i]}" cy="${Y(v)}" r="3.5" fill="${se.color}"/>`;
-      if(series.length<=3) s+=`<text x="${xs[i]}" y="${Y(v)-8}" class="pt" fill="${se.color}">${opts.fmt?opts.fmt(v):v}</text>`; });
+      if(series.length<=3 && !placed.some(q=>q[0]===i && Math.abs(q[1]-Y(v))<12)){ placed.push([i,Y(v)]); s+=`<text x="${xs[i]}" y="${Y(v)-8}" class="pt" fill="${se.color}">${opts.fmt?opts.fmt(v):v}</text>`; } });
   });
   return `<svg viewBox="0 0 ${W} ${H}" class="tchart">${s}</svg>`;
 }
-function stackedYears(byYear){
-  const W=640,H=280,m={l:42,r:16,t:20,b:30};
+function stackedYears(byYear, opts){
+  opts=opts||{}; const W=opts.W||640,H=opts.H||280,m={l:42,r:16,t:20,b:30};
   const tot = YEARS.map(y=>DIR_ORDER.reduce((a,d)=>a+byYear[y][d],0));
   const max = niceMax(Math.max(1,...tot));
   const {xs,lab} = xYears(W,H,m); const bw=(W-m.l-m.r)/YEARS.length*0.6;
@@ -3105,34 +3148,39 @@ function renderTrends(){
   const ys = msel('filterYear').map(Number).sort((a,b)=>a-b);
   YEARS = ys.length ? ys : ALL_YEARS;
   const yearNote = '';
-  let html = `<div class="trends-hd"><h3>Trends</h3><p><b>${list.length}</b> of ${bills.length} bills${filt.length?` &middot; ${filt.join(' &middot; ')}`:' &middot; no filters applied'}. Charts redraw when you change the filters above.${yearNote} <span class="tnote">* 2026 is provisional.</span></p></div>`;
+  let html = `<div class="trends-hd"><h3>Trends</h3><p><b>${list.length}</b> of ${bills.length} bills${filt.length?` &middot; ${filt.join(' &middot; ')}`:' &middot; no filters applied'}. Charts redraw when you change the filters above.${yearNote} <span class="tnote">* 2026 is provisional.</span></p></div>` + issuePickerHTML();
   if(!list.length){ box.innerHTML = html + '<div class="empty">No bills match the current filters.</div>'; return; }
   const byYear = {}; YEARS.forEach(y=>byYear[y]={Reform:0,Punitive:0,Mixed:0,Administrative:0});
   list.forEach(b=>{ if(byYear[b.year]) byYear[b.year][b.direction]++; });
-  html += '<div class="tgrid">';
+  const SM={W:460,H:300};
+  html += '<div class="tgrid tgrid-3">';
   // 1 reform vs punitive
   html += chartCard('Reform and punitive bills by year','Number of enacted bills coded Reform or Punitive.',
-    lineChart([{values:YEARS.map(y=>byYear[y].Reform),color:DIR_COL.Reform},{values:YEARS.map(y=>byYear[y].Punitive),color:DIR_COL.Punitive}]),
+    lineChart([{values:YEARS.map(y=>byYear[y].Reform),color:DIR_COL.Reform},{values:YEARS.map(y=>byYear[y].Punitive),color:DIR_COL.Punitive}],SM),
     legendHTML([['Reform',DIR_COL.Reform],['Punitive',DIR_COL.Punitive]]));
   // 2 all directions stacked
   html += chartCard('All enacted bills by year and direction','Each bar is one year; segments show the four direction codes.',
-    stackedYears(byYear), legendHTML(DIR_ORDER.map(d=>[d,DIR_COL[d]])));
+    stackedYears(byYear,SM), legendHTML(DIR_ORDER.map(d=>[d,DIR_COL[d]])));
   // 3 ratio
   const exLT = list.filter(b=>b.state!=='Louisiana'&&b.state!=='Tennessee');
   const ratioByYear = l => YEARS.map(y=>{ let r=0,p=0; l.forEach(b=>{ if(b.year===y){ if(b.direction==='Reform')r++; else if(b.direction==='Punitive')p++; } }); return p? +(r/p).toFixed(2) : null; });
-  html += chartCard('Reform-to-punitive ratio by year','Reform bills per punitive bill. A missing point means no punitive bills that year.',
-    lineChart([{values:ratioByYear(list),color:'#274500'},{values:ratioByYear(exLT),color:'#FF9700',dash:true}],{fmt:v=>(+v).toFixed(1)}),
-    legendHTML([['All states','#274500'],['Excluding Louisiana and Tennessee','#FF9700',true]]));
-  // 4 issues over time
-  const tagTot={}; list.forEach(b=>b.issues.forEach(i=>{ if(i!=='Administrative/Appropriations') tagTot[i]=(tagTot[i]||0)+1; }));
-  const pickedTags = msel('filterIssue');
-  const topTags = (pickedTags.length ? pickedTags.map(t=>[t,tagTot[t]||0]) : Object.entries(tagTot)).sort((a,b)=>b[1]-a[1]).slice(0,6).map(t=>t[0]);
-  const TAGCOL=['#386300','#8b2020','#7C00FF','#FF9700','#1f6f8b','#4a5568'];
-  if(topTags.length){
-    html += chartCard('Most common issues by year', pickedTags.length ? `Bills carrying ${pickedTags.length===1?'the selected issue tag':'each selected issue tag'}, by year${pickedTags.length>6?' (the six most common shown)':''}.` : 'Bills carrying each of the six most-used issue tags (appropriations excluded). Pick an issue in the filter bar to see one on its own.',
-      lineChart(topTags.map((t,i)=>({values:YEARS.map(y=>list.filter(b=>b.year===y&&b.issues.includes(t)).length),color:TAGCOL[i]}))),
-      legendHTML(topTags.map((t,i)=>[t,TAGCOL[i]])));
+  const pickedI = msel('filterIssue');
+  const withHi = pickedI.filter(t=>(ISSUE_HIGHLIGHTS[t]||[]).length);
+  const showHi = pickedI.length>=1 && pickedI.length<=3 && withHi.length && trendSlot!=='ratio';
+  const ratioCard = () => { const both = !pickedI.length;
+    return chartCard('Reform-to-punitive ratio by year','Reform bills per punitive bill. A missing point means no punitive bills that year.',
+      lineChart(both?[{values:ratioByYear(list),color:'#274500'},{values:ratioByYear(exLT),color:'#FF9700',dash:true}]:[{values:ratioByYear(list),color:'#274500'}],{fmt:v=>(+v).toFixed(1),W:SM.W,H:SM.H}),
+      both?legendHTML([['All states','#274500'],['Excluding Louisiana and Tennessee','#FF9700',true]]):''); };
+  const slotSwitch = (pickedI.length>=1 && pickedI.length<=3 && withHi.length) ? `<div class="tseg tseg-sm"><button class="${showHi?'on':''}" onclick="setTrendSlot('hi')">Notable bills</button><button class="${showHi?'':'on'}" onclick="setTrendSlot('ratio')">Ratio</button></div>` : '';
+  if(showHi){
+    const tab = withHi.includes(hiTab) ? hiTab : withHi[0];
+    const tabs = withHi.length>1 ? `<div class="hi-tabs">${withHi.map(t=>`<button type="button" class="${t===tab?'on':''}" data-t="${esc(t)}" onclick="setHiTab(this.dataset.t)">${esc(t)}</button>`).join('')}</div>` : '';
+    const items = ISSUE_HIGHLIGHTS[tab].map(e=>`<li><a href="#" class="hi-bill" data-b="${esc(e.bill)}" onclick="openHighlightBill(this.dataset.b);return false;">${esc(e.bill)}</a>${e.year?` <span class="hi-yr">(${e.year})</span>`:''} ${esc(e.text)}</li>`).join('');
+    html += `<div class="tcard tcard-hi"><h4>Notable bills${withHi.length===1?`: ${esc(tab)}`:''}</h4>${slotSwitch}${tabs}<ul class="hi-list">${items}</ul></div>`;
+  } else {
+    html += ratioCard().replace('</h4>','</h4>'+slotSwitch);
   }
+  html += '</div><div class="tgrid">';
   // 5 states ranked
   const st={}; list.forEach(b=>{ (st[b.state]=st[b.state]||{Reform:0,Punitive:0,Mixed:0,Administrative:0})[b.direction]++; });
   let srows = Object.entries(st).map(([s,d])=>({label:s,segs:d,n:DIR_ORDER.reduce((a,k)=>a+d[k],0),ratio:ratioValue(d.Reform,d.Punitive)}));
@@ -3152,12 +3200,6 @@ function renderTrends(){
   html += `<div class="tcard tcard-wide"><h4>States ranked</h4><div class="tsub">${sNote}</div>
     <div class="tseg"><button class="${trendStateSort==='volume'?'on':''}" onclick="setTrendStateSort('volume')">By number of bills</button><button class="${trendStateSort==='ratio'?'on':''}" onclick="setTrendStateSort('ratio')">By reform-to-punitive ratio</button></div>
     ${legendHTML(DIR_ORDER.map(d=>[d,DIR_COL[d]]))}${srows.length?hbarChart(srows,{wide:true}):'<div class="empty">Not enough bills for this view.</div>'}</div>`;
-  // 6 sponsorship by direction
-  const SP=['D only','R only','Bipartisan','Committee/Unknown','Other'];
-  const sp={}; list.forEach(b=>{ const k=SP.includes(b.sponsorship)?b.sponsorship:'Committee/Unknown'; (sp[k]=sp[k]||{Reform:0,Punitive:0,Mixed:0,Administrative:0})[b.direction]++; });
-  const sprows = SP.filter(k=>sp[k]).map(k=>{ const n=DIR_ORDER.reduce((a,d)=>a+sp[k][d],0); return {label:(SPON_LABEL[k]||k).replace(/^./,c=>c.toUpperCase()),segs:sp[k],right:n+(n===1?' bill':' bills')}; });
-  html += chartCard('Sponsorship by direction','Share of each sponsorship group&rsquo;s bills in each direction (numbers inside the bars are bill counts).',
-    hbarChart(sprows,{pct:true}), legendHTML(DIR_ORDER.map(d=>[d,DIR_COL[d]])));
   html += '</div>';
   box.innerHTML = html;
 }
@@ -3178,12 +3220,42 @@ function exitTrends(silent){
 }
 function toggleTrends(){ if(trendsMode) exitTrends(); else enterTrends(); }
 
+// Notable bills shown in Trends when 1-3 issues are picked. Silas writes these. Format:
+// "Diversion": [ {bill:"IL S 64", year:2021, text:"..."}, ... ]
+const ISSUE_HIGHLIGHTS = {
+};
+let trendSlot = 'hi', hiTab = '';
+function setTrendSlot(v){ trendSlot=v; renderTrends(); }
+function setHiTab(t){ hiTab=t; renderTrends(); }
+function openHighlightBill(bill){
+  ['filterYear','filterState'].forEach(id=>{ document.getElementById(id).value=''; });
+  document.getElementById('search').value = bill;
+  exitTrends(true); render();
+  const w=_tableWrap(); if(w && w.scrollIntoView) w.scrollIntoView({behavior:'smooth', block:'start'});
+}
+const TREND_ISSUES = ['Charging/Sentencing','Detention Conditions','Records & Expungement','Due Process','Truancy & Schools','Diversion'];
+function issuePickerHTML(){
+  const picked = msel('filterIssue');
+  const base = trendFiltered(true);
+  const cnt = t => base.filter(b=>b.issues.includes(t)).length;
+  const others = picked.filter(t=>!TREND_ISSUES.includes(t));
+  return `<div class="ipick"><div class="ipick-hd"><b>Focus on an issue</b><span>Pick one or more. With several picked, a bill counts if it carries any of them. Numbers are bills under your other filters.</span></div>
+    <div class="ipick-row"><button type="button" class="ipick-chip ${picked.length?'':'on'}" onclick="pickTrendIssue('')">All issues</button>${TREND_ISSUES.map(t=>`<button type="button" class="ipick-chip ${picked.includes(t)?'on':''}" aria-pressed="${picked.includes(t)}" onclick="pickTrendIssue(this.dataset.t)" data-t="${esc(t)}">${esc(t)} <i>${cnt(t)}</i></button>`).join('')}</div>
+    ${others.length?`<div class="ipick-more">Also picked in the Issues filter: ${esc(others.join(', '))}</div>`:''}</div>`;
+}
+function pickTrendIssue(t){
+  const sel=document.getElementById('filterIssue');
+  if(!t){ [...sel.options].forEach(o=>o.selected=false); }
+  else { const o=[...sel.options].find(x=>x.value===t); if(o) o.selected=!o.selected; }
+  render();
+}
 function drillToState(st){
   document.getElementById('filterState').value = st;
   exitTrends(true);
   render();
   const w=_tableWrap(); if(w && w.scrollIntoView) w.scrollIntoView({behavior:'smooth', block:'start'});
-  showAutosave(`Showing ${st} bills with your current filters`, false);
+  const iss=msel('filterIssue');
+  showAutosave(`Showing ${st} bills${iss.length?' tagged '+iss.join(' or '):''} with your current filters`, false);
 }
 
 function isHeading(t){
@@ -3201,7 +3273,7 @@ function fmtRatio(r,p){ return `<span class="ratio">${r}<span class="ratio-colon
 function emphasiseNarr(t){
   return t.split(/(https?:\/\/[^\s<"]+)/).map((seg,i)=> i%2 ? seg :
     seg.replace(BILL_RE,(m,pre,bill,off,str)=>(/^A 20\d\d$/.test(bill)&&/^ [a-z]/.test(str.slice(off+m.length)))?m:`${pre}<strong class="bill-ref">${bill}</strong>`)
-       .replace(/(^|[^\d.])(\d+(?:\.\d+)?):([01])(?!\d)/g,(m,pre,r,p)=>pre+fmtRatio(r,p))
+       .replace(/(^|[^\d.])(\d+(?:\.\d+)?):([01])(?!\d)/g,(m,pre,r,p)=>pre+fmtRatio((p==='1'&&r.indexOf('.')<0)?r+'.0':r,p))
   ).join('');
 }
 function linkifyNarr(t){
