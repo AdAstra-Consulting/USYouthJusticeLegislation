@@ -43,8 +43,8 @@
   "@type": "Place",
   "name": "United States"
  },
- "dateModified": "2026-11-04",
- "version": "Build 52",
+ "dateModified": "2026-11-06",
+ "version": "Build 53",
  "keywords": [
   "juvenile justice",
   "youth justice",
@@ -598,6 +598,37 @@ tbody tr{border-bottom:1px solid var(--border);transition:background 0.1s;}
   .sp-shape svg{width:100%;height:auto;display:block;}
   .sp-shape path{fill:var(--reform);fill-opacity:0.16;stroke:var(--green-dark);stroke-width:1.3;stroke-linejoin:round;}
 
+
+  /* ---- build 53: then-and-now, sub-issues, issue changes ---- */
+  .tgrid-b53{margin-bottom:1rem;}
+  .tcmp{width:100%;border-collapse:collapse;font-size:0.8rem;margin:0.2rem 0 0.5rem;}
+  .tcmp th,.tcmp td{padding:0.32rem 0.45rem;border-bottom:1px solid var(--border);text-align:right;font-family:var(--mono);}
+  .tcmp thead{position:static;}
+  .tcmp thead th{background:none;color:var(--green-dark);font-family:var(--sans);font-weight:800;font-size:0.68rem;letter-spacing:0.04em;text-transform:none;border-bottom:2px solid var(--green-dark);cursor:default;text-align:right;padding:0.32rem 0.45rem;}
+  .tcmp thead th:hover{color:var(--green-dark);}
+  .tcmp td:first-child,.tcmp th:first-child{text-align:left;font-family:var(--sans);}
+  .tcmp tr.tcmp-main td{font-weight:800;}
+  .tcmp tr.tcmp-share td{border-top:2px solid var(--border);font-weight:700;}
+  @media (max-width:760px){ .tcmp{font-size:0.74rem;} .tcmp td:first-child{white-space:nowrap;} .tcmp th,.tcmp td{padding:0.3rem 0.3rem;} }
+  .tdot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:0.4rem;vertical-align:0;}
+  .tsub-gap{margin-top:0.6rem;}
+  .tmsg{font-size:0.8rem;color:var(--text-light);padding:1.5rem 0.5rem;text-align:center;}
+  .sub-row,.chg-row{cursor:pointer;}
+  .sub-row.sub-empty{cursor:default;opacity:0.5;}
+  .sub-hit{fill:transparent;}
+  .sub-row:hover .sub-hit,.chg-row:hover .sub-hit{fill:#f3f6ee;}
+  .sub-row.sub-on .sub-hit,.chg-row.chg-on .sub-hit{fill:#e7efdc;}
+  .sub-row.sub-on .sub-lab,.chg-row.chg-on .sub-lab{font-weight:800;fill:#274500;}
+  .sub-row:hover .sub-lab,.chg-row:hover .sub-lab{text-decoration:underline;}
+  .tchart line.zero{stroke:#9a9a92;stroke-width:1;}
+  .tchart line.ref{stroke:#274500;stroke-width:1.3;stroke-dasharray:5 4;}
+  .tchart text.ref-lab{fill:#274500;font-weight:700;}
+  .sub-bar{font-size:0.76rem;background:#eef4e6;border:1px solid var(--green-light);border-radius:4px;padding:0.4rem 0.6rem;margin:0.2rem 0 0.5rem;line-height:1.6;}
+  .sub-bar button{font-family:var(--sans);font-weight:700;font-size:0.68rem;border:1px solid var(--green);background:white;color:var(--green-dark);border-radius:3px;padding:0.15rem 0.5rem;cursor:pointer;margin-left:0.3rem;}
+  .sub-bar a{font-size:0.7rem;margin-left:0.4rem;color:var(--green-dark);}
+  .rc-sub{color:var(--green-dark);font-weight:700;}
+  .chg-row text.pt,.sub-row text.pt{paint-order:stroke;stroke:white;stroke-width:3px;stroke-linejoin:round;}
+  .rc-sub button{border:none;background:none;color:var(--green-dark);font-size:0.95rem;cursor:pointer;padding:0 0.2rem;line-height:1;}
   /* ---- build 48: clickable state names in Trends ---- */
   svg.tchart .ax-link{fill:var(--purple);font-weight:700;cursor:pointer;text-decoration:underline;}
   svg.tchart .ax-link:hover{fill:#5a00bf;}
@@ -663,7 +694,7 @@ tbody tr{border-bottom:1px solid var(--border);transition:background 0.1s;}
       <div class="header-meta">
         <span>50 States</span>
         <span>968 Bills</span>
-        <span>Build 52</span>
+        <span>Build 53</span>
         <span>Enacted laws only</span>
         <span>Years: 2021&#8211;26</span>
       </div>
@@ -738,7 +769,7 @@ tbody tr{border-bottom:1px solid var(--border);transition:background 0.1s;}
 
 <p><strong>Contact.</strong> <a href="mailto:silasatadastra@gmail.com">silasatadastra@gmail.com</a></p>
 
-      <p><strong>Last updated.</strong> 4 November 2026 (Build 52)</p>
+      <p><strong>Last updated.</strong> 6 November 2026 (Build 53)</p>
     </div>
   </div>
 </div>
@@ -2705,6 +2736,7 @@ function render(){
   closeAllEditors();
   syncLegend();
   syncMulti();
+  syncSubPick();
   const q=document.getElementById('search').value.toLowerCase();
   const fY=msel('filterYear'),fS=msel('filterState'),fD=document.getElementById('filterDirection').value;
   const fI=msel('filterIssue'),fP=document.getElementById('filterParty').value,fSt=document.getElementById('filterStatus').value,fSrc=document.getElementById('filterSource').value;
@@ -2720,12 +2752,12 @@ function render(){
     if(fCos==='none') mCos=(b.cosponsor_count||0)===0;
     else if(fCos) mCos=(b.cosponsor_count||0)>=parseInt(fCos,10);
     const mF=!showFlaggedOnly||b.flagged;
-    return mq&&mY&&mS&&mD&&mI&&mP&&mSt&&mSrc&&mSpon&&mCos&&mF;
+    return mq&&mY&&mS&&mD&&mI&&mP&&mSt&&mSrc&&mSpon&&mCos&&mF&&subOk(b);
   });
   filtered.sort((a,b)=>{let va=a[sortCol],vb=b[sortCol];if(sortCol==='year')return sortDir*(va-vb);return sortDir*((va||'').toString().localeCompare((vb||'').toString()));});
   const tbody=document.getElementById('tableBody');tbody.innerHTML='';
   document.getElementById('emptyState').style.display=filtered.length?'none':'block';
-  document.getElementById('resultCount').textContent=`${filtered.length} of ${bills.length} bills`;
+  document.getElementById('resultCount').innerHTML=`${filtered.length} of ${bills.length} bills${subPick?` <span class="rc-sub">&middot; ${esc(subPick.issue)} sub-issue: ${esc(subName(subPick.issue,subPick.id))} <button type="button" onclick="setSubPick('','')" title="Show all bills for this issue">&times;</button></span>`:''}`;
   filtered.forEach(b=>{
     const tr=document.createElement('tr');
     if(b.flagged)tr.classList.add('row-flagged');
@@ -3112,7 +3144,7 @@ function buildGlance(){
 // ============ TRENDS ============
 let trendsMode = false;
 let trendStateSort = 'volume';
-function trendFiltered(skipIssue){
+function trendFiltered(skipIssue, skipSub){
   const q=document.getElementById('search').value.toLowerCase();
   const fY=msel('filterYear'),fS=msel('filterState'),fD=document.getElementById('filterDirection').value;
   const fI=msel('filterIssue'),fP=document.getElementById('filterParty').value,fSt=document.getElementById('filterStatus').value,fSrc=document.getElementById('filterSource').value;
@@ -3128,6 +3160,7 @@ function trendFiltered(skipIssue){
     if(fCos==='none' && (b.cosponsor_count||0)!==0) return false;
     if(fCos && fCos!=='none' && (b.cosponsor_count||0) < parseInt(fCos,10)) return false;
     if(showFlaggedOnly && !b.flagged) return false;
+    if(!skipIssue && !skipSub && !subOk(b)) return false;
     return true;
   });
 }
@@ -3138,6 +3171,7 @@ function activeFilterText(){
   const addM = (id,one,many) => { const v=msel(id); if(id==='filterYear') v.sort(); if(v.length) parts.push(`${v.length===1?one:many}: ${esc(v.join(', '))}`); };
   addM('filterYear','Year','Years'); addM('filterState','State','States'); add('filterDirection','Direction'); addM('filterIssue','Issue','Issues (any of)'); add('filterParty','Sponsor');
   add('filterSponsorship','Sponsorship'); add('filterCosponsors','Cosponsors'); add('filterStatus','Review'); add('filterSource','Source');
+  if(subPick) parts.push(`sub-issue: ${esc(subName(subPick.issue,subPick.id))}`);
   if(showFlaggedOnly) parts.push('flagged only');
   return parts;
 }
@@ -3250,7 +3284,12 @@ function renderTrends(){
   } else {
     html += ratioCard().replace('</h4>','</h4>'+slotSwitch);
   }
-  html += '</div><div class="tgrid">';
+  html += '</div>';
+  // build 53: period comparison, sub-issues, issue changes
+  const cards = [periodCard(list, trendFiltered(true))];
+  pickedI.filter(t=>SUB_ISSUES[t]).forEach(t=>cards.push(subIssueCard(t)));
+  const chg = issueChangeCard(cards.length%2===0); if(chg) cards.push(chg);
+  html += '<div class="tgrid tgrid-b53">' + cards.join('') + '</div><div class="tgrid">';
   // 5 states ranked
   const st={}; list.forEach(b=>{ (st[b.state]=st[b.state]||{Reform:0,Punitive:0,Mixed:0,Administrative:0})[b.direction]++; });
   let srows = Object.entries(st).map(([s,d])=>({label:s,segs:d,n:DIR_ORDER.reduce((a,k)=>a+d[k],0),ratio:ratioValue(d.Reform,d.Punitive)}));
@@ -3304,6 +3343,127 @@ function openHighlightBill(bill){
   const w=_tableWrap(); if(w && w.scrollIntoView) w.scrollIntoView({behavior:'smooth', block:'start'});
 }
 const TREND_ISSUES = ['Charging/Sentencing','Detention Conditions','Records & Expungement','Due Process','Truancy & Schools','Diversion'];
+
+// Sub-issues (build 53): groupings inside broad tags, assigned by hand from bill summaries.
+// Display-only lookup used by Trends and the table filter. NOT tags: nothing here changes a bill record.
+// Keys are "YEAR BILL", e.g. "2021 IL S 2122". Each bill sits in one group. Bills carrying the tag
+// but missing from every group (e.g. added in a later build) show as "Not yet sorted".
+const SUB_ISSUES = {"Due Process":{"groups":[{"id":"court-procedure","name":"Court procedure & jurisdiction","bills":["2021 LA H 70","2021 VA H 1878","2022 AZ S 1073","2022 CO S 18","2022 NY S 7171","2022 OK S 217","2022 UT H 299","2022 WI S 219","2023 CA S 545","2023 ND H 1137","2023 OK H 1032","2023 TN H 1186","2023 WY H 9","2024 CA A 170","2024 TN S 2127","2024 UT H 459","2025 AR S 320","2025 IN S 259","2025 NJ A 5018","2026 CA S 174","2026 IL H 5310","2026 LA S 396","2026 MS S 2001","2026 VT H 642"]},{"id":"questioning","name":"Police custody & questioning","bills":["2021 IL S 2122","2021 NV A 132","2021 OR S 418","2021 UT H 158","2021 WA H 1140","2022 AZ H 2309","2022 CA A 2644","2022 DE H 419","2022 MD S 53","2022 UT H 171","2023 CO H 1042","2023 IL H 3253","2023 IN S 415","2023 NC H 186","2023 NV A 193","2023 UT S 49","2024 NJ A 3117","2024 TN S 1577","2024 UT H 259","2025 AZ H 2779","2026 CA A 1905"]},{"id":"detention","name":"Detention & custody decisions","bills":["2021 CO S 71","2021 FL H 885","2021 ID H 26","2021 IL S 2370","2021 IN S 368","2021 VA S 1456","2021 VT H 20","2022 CA A 2658","2022 FL H 7029","2022 ID H 451","2023 CA S 448","2023 LA H 523","2023 MI H 4629","2023 SD S 4","2023 UT S 67","2024 SD H 1245","2024 TN H 619","2025 NV A 90","2026 CA A 1902","2026 NH S 413"]},{"id":"records","name":"Records & use of adjudications","bills":["2021 DE H 243","2021 NV A 251","2021 OR S 133","2022 CT H 5393","2022 MD H 146","2022 UT H 19","2024 SD S 27","2025 TN S 221","2026 CA S 1285"]},{"id":"defense-funding","name":"Defense funding & administration","bills":["2023 MI S 425","2023 SD H 1064","2025 TX H 1445","2025 UT S 171","2025 VA S 901","2026 IL H 4217","2026 KY H 762","2026 ME S 852"]},{"id":"competency","name":"Competency & mental health","bills":["2021 OK H 2312","2022 UT H 277","2023 CO H 1012","2023 ND H 1263","2023 TX S 1585","2025 CA S 820","2025 ND S 2036","2025 UT H 276"]},{"id":"counsel","name":"Right to counsel","bills":["2021 NH S 143","2022 CO H 1038","2022 ME H 224","2023 NV S 382","2025 UT S 157","2026 MI S 81"]},{"id":"victims","name":"Victims & child-witness statements","bills":["2022 VT S 224","2023 CO S 193","2023 NY A 6545","2024 OK H 3774","2026 WI S 884"]},{"id":"diversion","name":"Diversion & pre-court screening","bills":["2022 NY S 7790","2023 CO H 1249","2023 MI H 4625","2023 MI H 4628","2023 NH S 43"]},{"id":"fees","name":"Fines, fees & costs","bills":["2022 OK H 3205","2023 AZ S 1197","2023 MI S 429","2023 UT S 186"]},{"id":"wrongful-conviction","name":"Wrongful conviction","bills":["2022 VA S 755","2023 WA S 5046","2026 IL H 3663"]},{"id":"dependency","name":"Dependency proceedings","bills":["2025 CA A 373","2025 CA A 651"]},{"id":"other","name":"Other or omnibus","bills":["2021 NH H 566","2021 OR S 436","2021 TX S 2049","2022 AZ S 1069","2022 CO H 1229","2022 CO H 1257","2022 CT H 5417","2023 CA A 1118","2024 FL H 1425","2025 FL S 1344","2025 UT H 353","2026 KS HB 2329","2026 MO H 2637","2026 NH H 1236"]}]},"Charging/Sentencing":{"groups":[{"id":"adult-court","name":"Adult court & transfer","bills":["2021 CA A 624","2021 KY S 36","2021 ME S 35","2021 NV A 230","2021 OK S 310","2022 CA A 2361","2022 LA S 71","2022 OK S 217","2022 UT H 299","2023 AR S 406","2023 CA S 545","2023 IL H 3414","2023 IN S 464","2023 LA H 54","2023 MI H 4633","2023 NC H 186","2023 OK S 77","2023 TN S 611","2023 WY H 9","2024 KY S 20","2024 LA S 2","2024 NC H 834","2024 NE L 184","2024 NJ S 3006","2024 TN H 2126","2024 UT H 459","2025 MT H 332","2026 HI S 2108","2026 IL H 5020","2026 IN H 1249","2026 MD S 323","2026 MS S 2710","2026 VT H 642"]},{"id":"adult-sentences","name":"Adult sentences, parole & sentence review","bills":["2021 AR S 652","2021 CO H 1091","2021 CO H 1209","2021 MD S 494","2021 NY A 6769","2021 WY H 34","2022 LA H 628","2022 LA S 273","2022 VA H 502","2023 CT S 952","2023 IL H 1064","2023 IL H 3026","2023 NM S 64","2023 OR S 902","2023 WA H 1324","2024 LA H 9","2024 MS S 2022","2025 AR S 458","2025 HI H 103","2025 HI S 544","2025 MD H 853","2025 WA H 1815","2026 CO H 1064","2026 CO S 115","2026 CO S 158","2026 IL S 3333","2026 LA H 280","2026 LA S 201","2026 MD S 162","2026 ME H 732","2026 VA H 26","2026 VA H 361","2026 VA S 62"]},{"id":"offenses","name":"Offenses & penalties","bills":["2021 AR H 1651","2021 CA A 333","2021 CO S 271","2021 IN H 1256","2021 TN S 1117","2022 CO H 1257","2022 MS S 2245","2022 TN H 2244","2023 AL S 143","2023 DE H 186","2023 FL H 1465","2023 VT S 4","2024 FL H 1181","2024 KY H 5","2024 LA S 377","2024 MS H 1196","2024 VT S 58","2025 AZ H 2207","2025 NC H 307","2026 CA A 2339","2026 LA H 133","2026 LA H 137","2026 LA S 258","2026 NC H 1173","2026 SC H 3020"]},{"id":"age-limits","name":"Age limits of juvenile court","bills":["2021 DE H 115","2021 MD H 1187","2021 MS S 2282","2021 NC S 207","2022 NY A 8739","2022 NY S 4051","2022 VT S 224","2023 CO H 1249","2024 LA S 3","2024 MD H 814","2024 NH S 506","2024 TN S 624","2024 WA H 2217","2025 AR S 488","2025 HI S 691","2025 ME H 1233","2025 NV A 351","2025 VT H 2","2026 MD H 776","2026 VA S 18"]},{"id":"dispositions","name":"Juvenile dispositions & commitment","bills":["2021 CA S 92","2021 UT H 1002","2021 UT H 67","2021 VA H 1991","2022 AZ S 1073","2022 DE H 314","2022 UT H 55","2023 LA H 84","2023 MI H 4637","2023 ND H 1160","2023 SD S 4","2023 UT S 15","2024 LA S 183","2024 LA S 4","2024 PA S 169","2025 TN H 1025","2026 NH S 412","2026 SD S 179","2026 TN S 2201"]},{"id":"court-procedure","name":"Evidence, competency & court procedure","bills":["2021 OK H 2312","2022 NY S 7171","2022 VA S 392","2024 CA A 2484","2024 ID S 1367","2024 UT S 180","2024 WV H 5520","2025 ND S 2036","2025 ND S 2037","2025 VA H 2222","2025 VA S 965","2026 CA S 174","2026 LA H 1054","2026 LA S 396","2026 MD S 294","2026 MD S 475","2026 MI S 81","2026 VA S 528"]},{"id":"military-bases","name":"Military-base jurisdiction","bills":["2023 MD H 749","2023 MD S 115","2024 AL S 210","2024 DE H 356","2024 ME S 923","2025 AR H 1815","2025 IN H 1121","2025 MS S 2297","2025 PA H 491","2025 RI H 5222","2025 RI S 557","2025 TX S 1271","2026 SC H 3910","2026 WV H 4364"]},{"id":"intake-diversion","name":"Intake, diversion & dismissal","bills":["2021 CA S 383","2021 VA H 1878","2022 CA A 2629","2022 LA H 434","2023 CA A 1643","2023 MI H 4626","2023 MI S 421","2024 CA S 1484","2026 IL H 4639","2026 VA H 245","2026 VA H 438"]},{"id":"detention","name":"Detention & place of confinement","bills":["2021 CO S 192","2021 HI S 386","2021 ID H 26","2021 NV S 356","2021 OK H 2311","2021 VT H 20","2023 CA S 448","2025 ME H 6","2026 CA S 1009","2026 LA H 140","2026 UT H 48"]},{"id":"fees","name":"Fines, fees & costs","bills":["2021 IA S 367","2023 OK H 2165","2023 WA H 1169","2024 TN S 2571","2025 CO H 1294","2025 VA H 1665","2026 CO H 1232","2026 TN S 1740"]},{"id":"records","name":"Records & expungement","bills":["2022 CT H 5393","2022 IL H 4741","2024 AL S 153","2024 IL S 3463","2025 TN S 221","2026 VA S 230"]},{"id":"safe-harbor","name":"Safe harbor for trafficked or exploited youth","bills":["2024 IL H 5465","2025 AR S 431","2025 AR S 620","2025 HI S 292","2025 UT H 22"]},{"id":"other","name":"Other or omnibus","bills":["2021 CT H 6667","2021 IN S 368","2021 NV S 7","2021 OR S 436","2022 CA A 2595","2022 CT H 5417","2022 MD S 691","2022 UT H 28","2022 WY S 31","2023 KS H 2021","2023 MN S 2909","2024 AR S 65","2024 CA A 170","2024 ID S 1350","2024 MD H 115","2024 MO S 754","2024 NE L 1051","2024 UT S 200","2025 AR S 320","2025 CA A 1071","2025 CA S 459","2025 IL S 31","2025 MS S 2771","2025 NC H 620","2025 UT H 353","2025 UT SCR 1","2026 AR S 60","2026 GA H 256","2026 IA H 2523","2026 KS HB 2329","2026 MO H 2637","2026 TN S 1605","2026 TN S 2324","2026 UT HCR 2","2026 VA H 667"]}]}};
+let subPick = null;   // {issue, id} while a sub-issue is picked
+const subKey = b => b.year + ' ' + b.bill;
+const _subSets = {};
+function subSet(issue, id){
+  const k = issue + '|' + id; if(_subSets[k]) return _subSets[k];
+  const def = SUB_ISSUES[issue]; if(!def) return null;
+  let s;
+  if(id === '_unsorted'){ const all = new Set(def.groups.flatMap(g=>g.bills)); s = {has: key => !all.has(key)}; }
+  else { const g = def.groups.find(g=>g.id===id); if(!g) return null; s = new Set(g.bills); }
+  return _subSets[k] = s;
+}
+function subName(issue, id){
+  if(id === '_unsorted') return 'Not yet sorted';
+  const g = ((SUB_ISSUES[issue]||{}).groups||[]).find(g=>g.id===id); return g ? g.name : id;
+}
+function subOk(b){
+  if(!subPick) return true;
+  const s = subSet(subPick.issue, subPick.id); if(!s) return true;
+  return b.issues.includes(subPick.issue) && s.has(subKey(b));
+}
+function syncSubPick(){ if(subPick && !msel('filterIssue').includes(subPick.issue)) subPick = null; }
+function setSubPick(issue, id){
+  subPick = (id && !(subPick && subPick.issue===issue && subPick.id===id)) ? {issue, id} : null;
+  render();
+}
+function subLink(){
+  if(!subPick) return '';
+  return location.pathname + '?view=trends&issue=' + encodeURIComponent(subPick.issue) + '&sub=' + encodeURIComponent(subPick.id);
+}
+const PERIODS = [[2021,2022,2023],[2024,2025,2026]];
+function periodYears(){ return PERIODS.map(p=>p.filter(y=>YEARS.includes(y))); }
+function rangeLabel(ys){ return ys.length>1 ? `${ys[0]}&ndash;${String(ys[ys.length-1]).slice(2)}` : String(ys[0]); }
+function pctChange(a,b){ return a ? Math.round((b-a)/a*100) : (b ? null : undefined); }
+function fmtChange(v){ return v===undefined ? '&mdash;' : v===null ? 'new' : (v>0?'+':(v<0?'&minus;':'')) + Math.abs(v) + '%'; }
+function periodCard(list, base){
+  const [y1,y2] = periodYears();
+  const title = 'Then and now: 2021&ndash;23 against 2024&ndash;26';
+  if(!y1.length || !y2.length) return chartCard(title, 'Compares the two three-year periods.', '<div class="tmsg">Pick at least one year from each period in the Year filter to compare.</div>');
+  const issues = msel('filterIssue');
+  const focused = issues.length>0;
+  const c = (l,ys,d) => l.filter(b=>ys.includes(b.year) && (!d || b.direction===d)).length;
+  const row = (lab,a,b,cls) => `<tr class="${cls||''}"><td>${lab}</td><td>${a}</td><td>${b}</td><td>${fmtChange(pctChange(a,b))}</td></tr>`;
+  let rows = row('<b>Bills</b>', c(list,y1), c(list,y2), 'tcmp-main');
+  DIR_ORDER.forEach(d=>{ rows += row(`<i class="tdot" style="background:${DIR_COL[d]}"></i>${d}`, c(list,y1,d), c(list,y2,d)); });
+  let shareRow = '', shareChart = '';
+  if(focused){
+    const s = ys => { const n=c(base,ys); return n ? (100*c(list,ys)/n) : 0; };
+    const a=s(y1), b=s(y2);
+    shareRow = `<tr class="tcmp-share"><td>Share of all bills</td><td>${a.toFixed(1)}%</td><td>${b.toFixed(1)}%</td><td>${(b-a>0?'+':(b-a<0?'&minus;':''))}${Math.abs(b-a).toFixed(1)} pts</td></tr>`;
+    const vals = YEARS.map(y=>{ const n=base.filter(x=>x.year===y).length; return n ? +(100*list.filter(x=>x.year===y).length/n).toFixed(1) : null; });
+    const mx = Math.max(0,...vals.filter(v=>v!==null)); const sf = v => (mx<10 ? (+v).toFixed(1) : Math.round(v)) + '%';
+    shareChart = `<div class="tsub tsub-gap">Share of all enacted bills each year${subPick?' (this sub-issue)':''}, under the same filters.</div>` + lineChart([{values:vals,color:'#274500'}],{fmt:sf,W:640,H:240});
+  }
+  const ba=c(base,y1), bb=c(base,y2);
+  const what = subPick ? `${esc(subPick.issue)}: ${esc(subName(subPick.issue,subPick.id))}` : (focused ? esc(issues.join(' or ')) : 'All enacted bills');
+  const ref = focused ? `<div class="tsub">For comparison, all enacted bills under the same filters: ${ba} then ${bb} (${fmtChange(pctChange(ba,bb))}).</div>` : '';
+  return chartCard(title, `${what}. Counts of enacted bills in ${rangeLabel(y1)} and ${rangeLabel(y2)}.`,
+    `<table class="tcmp"><thead><tr><th></th><th>${rangeLabel(y1)}</th><th>${rangeLabel(y2)}</th><th>Change</th></tr></thead><tbody>${rows}${shareRow}</tbody></table>${ref}${shareChart}`);
+}
+function subIssueCard(issue){
+  const def = SUB_ISSUES[issue];
+  const [y1,y2] = periodYears();
+  const pool = trendFiltered(false,true).filter(b=>b.issues.includes(issue));
+  const gs = def.groups.map(g=>({id:g.id,name:g.name})).concat([{id:'_unsorted',name:'Not yet sorted'}]);
+  const rows = gs.map(g=>{ const s=subSet(issue,g.id); const l=pool.filter(b=>s.has(subKey(b)));
+      return {id:g.id,name:g.name,n:l.length,a:l.filter(b=>y1.includes(b.year)).length,b:l.filter(b=>y2.includes(b.year)).length}; })
+    .filter(r=>r.id!=='_unsorted' || r.n);
+  const two = y1.length && y2.length;
+  const W=640, rowH=two?34:24, m={l:262,r:70,t:6,b:6}, H=m.t+m.b+rows.length*rowH;
+  const max = Math.max(1,...rows.map(r=>Math.max(r.a,r.b)));
+  const bw = v => (W-m.l-m.r)*v/max;
+  let s='';
+  rows.forEach((r,i)=>{ const y=m.t+i*rowH, on = subPick && subPick.issue===issue && subPick.id===r.id;
+    s += `<g class="sub-row${on?' sub-on':''}${r.n?'':' sub-empty'}" data-i="${esc(issue)}" data-s="${r.id}" onclick="${r.n?'setSubPick(this.dataset.i,this.dataset.s)':''}"><title>${esc(r.name)}: ${r.n} bills${r.n?'. Click to focus Trends and the bill table on these bills.':''}</title>`;
+    s += `<rect x="0" y="${y}" width="${W}" height="${rowH}" class="sub-hit"/>`;
+    s += `<text x="${m.l-8}" y="${y+rowH/2+4}" class="ax ax-y sub-lab">${esc(r.name)}</text>`;
+    if(two){
+      s += `<rect x="${m.l}" y="${y+5}" width="${bw(r.a)}" height="11" fill="#BDBDB5"/><rect x="${m.l}" y="${y+17}" width="${bw(r.b)}" height="11" fill="#274500"/>`;
+      s += `<text x="${m.l+bw(Math.max(r.a,r.b))+6}" y="${y+rowH/2+4}" class="pt pt-l">${r.a} &#8594; ${r.b}</text>`;
+    } else {
+      s += `<rect x="${m.l}" y="${y+6}" width="${bw(r.n)}" height="12" fill="#274500"/><text x="${m.l+bw(r.n)+6}" y="${y+rowH/2+4}" class="pt pt-l">${r.n}</text>`;
+    }
+    s += '</g>'; });
+  const picked = subPick && subPick.issue===issue;
+  const bar = picked ? `<div class="sub-bar">Showing <b>${esc(subName(issue,subPick.id))}</b> across Trends and the bill table. <button type="button" onclick="setSubPick('','')">Show all ${esc(issue)} bills</button> <a href="${esc(subLink())}">Link to this view</a></div>` : '';
+  const legend = two ? legendHTML([[rangeLabel(y1).replace('&ndash;','–'),'#BDBDB5'],[rangeLabel(y2).replace('&ndash;','–'),'#274500']]) : '';
+  return `<div class="tcard"><h4>Inside ${esc(issue)}: sub-issues</h4><div class="tsub">${pool.length} bills tagged ${esc(issue)} under your other filters, each placed in the one group it mainly addresses. Click a group to focus Trends and the bill table on it.</div>${bar}${legend}<svg viewBox="0 0 ${W} ${H}" class="tchart">${s}</svg><div class="tsub tsub-gap">Groups were assigned by hand from bill summaries by Ad Astra Consulting (build 53). They are not tags and do not appear in the Issues filter. Bills added after build 53 show as &ldquo;Not yet sorted.&rdquo;</div></div>`;
+}
+function issueChangeCard(wide){
+  const [y1,y2] = periodYears();
+  if(!y1.length || !y2.length) return '';
+  const base = trendFiltered(true);
+  const tags = [...new Set(base.flatMap(b=>b.issues))];
+  const picked = msel('filterIssue');
+  let rows = tags.map(t=>{ const l=base.filter(b=>b.issues.includes(t)); const a=l.filter(b=>y1.includes(b.year)).length, b=l.filter(b=>y2.includes(b.year)).length; return {t,a,b,ch:pctChange(a,b)}; })
+    .filter(r=>r.a+r.b>=20 && r.ch!==null).sort((x,y)=>y.ch-x.ch || x.t.localeCompare(y.t));
+  if(!rows.length) return '';
+  const ta=base.filter(b=>y1.includes(b.year)).length, tb=base.filter(b=>y2.includes(b.year)).length, tch=pctChange(ta,tb);
+  const narrow = window.matchMedia && matchMedia('(max-width:760px)').matches; if(narrow) wide=false;
+  const W=wide?1100:640,rowH=22,m={l:wide?230:196,r:wide?160:120,t:22,b:6},H=m.t+m.b+rows.length*rowH;
+  const CAP=200; const cl=v=>Math.min(v,CAP);
+  const lo=Math.min(0,tch===null?0:tch,...rows.map(r=>r.ch)), hi=Math.max(0,tch===null?0:cl(tch),...rows.map(r=>cl(r.ch)));
+  const X=v=>m.l+(W-m.l-m.r)*(v-lo)/((hi-lo)||1);
+  let s=`<line x1="${X(0)}" x2="${X(0)}" y1="${m.t-4}" y2="${H-m.b}" class="zero"/>`;
+  if(tch!==null) s+=`<line x1="${X(tch)}" x2="${X(tch)}" y1="${m.t-4}" y2="${H-m.b}" class="ref"/><text x="${X(tch)}" y="${m.t-9}" class="pt ref-lab">All bills ${fmtChange(tch)}</text>`;
+  rows.forEach((r,i)=>{ const y=m.t+i*rowH, on=picked.includes(r.t), x0=X(Math.min(0,r.ch)), w=Math.abs(X(cl(r.ch))-X(0)), clip=r.ch>CAP;
+    s+=`<g class="chg-row${on?' chg-on':''}" data-t="${esc(r.t)}" onclick="pickTrendIssue(this.dataset.t)"><title>${esc(r.t)}: ${r.a} then ${r.b}. Click to pick this issue.</title><rect x="0" y="${y}" width="${W}" height="${rowH}" class="sub-hit"/>`;
+    s+=`<text x="${m.l-8}" y="${y+rowH/2+4}" class="ax ax-y sub-lab">${esc(r.t)}</text>`;
+    s+=`<rect x="${x0}" y="${y+4}" width="${w}" height="${rowH-8}" fill="${on?'#274500':(r.ch<0?'#8b2020':'#BDBDB5')}"/>`;
+    if(clip) s+=`<path d="M${X(CAP)-10},${y+3} l6,${rowH-6} M${X(CAP)-5},${y+3} l6,${rowH-6}" stroke="white" stroke-width="2.5"/>`;
+    const tx = r.ch>=0 ? X(cl(r.ch))+5 : X(0)+5;
+    s+=`<text x="${Math.max(tx, X(0)+5)}" y="${y+rowH/2+4}" class="pt pt-l">${fmtChange(r.ch)} (${r.a} &#8594; ${r.b})</text></g>`; });
+  return `<div class="tcard tcard-wide-ok${wide?' tcard-wide':''}"><h4>How each issue changed</h4><div class="tsub">Bills carrying each issue tag, ${rangeLabel(y1)} against ${rangeLabel(y2)}, under your filters other than Issue. Issues with 20 or more bills. A bill can carry several tags. Bars past +200% are cut short (marked //). Click an issue to pick it.</div><svg viewBox="0 0 ${W} ${H}" class="tchart">${s}</svg></div>`;
+}
+
 function issuePickerHTML(){
   const picked = msel('filterIssue');
   const base = trendFiltered(true);
@@ -3418,6 +3578,9 @@ function editStateNote(s){
     const el = document.getElementById(id);
     if(el){ if(el.multiple){ const vs=v.split(','); [...el.options].forEach(o=>{ o.selected = vs.includes(o.value); }); } else { el.value = v; } }
   });
+  const sp = p.get('sub');
+  if(sp){ const t = msel('filterIssue').find(t=>SUB_ISSUES[t] && (sp==='_unsorted' || SUB_ISSUES[t].groups.some(g=>g.id===sp))); if(t) subPick = {issue:t, id:sp}; }
+  if(p.get('view')==='trends' && !s){ enterTrends(); }
   if([...p.keys()].length) render();
 })();
 
